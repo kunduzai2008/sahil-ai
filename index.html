@@ -653,31 +653,6 @@
     </button>
   </div>
 
-  <!-- Hiddify code entry — page 1 shows ONLY the Hiddify icon,
-       no text. Tapping it opens the section with the code box.
-       JS below talks to https://sahil-us.duckdns.org and offers
-       the Hiddify open plus a file download on success. (The
-       guide video was removed at the owner's order, 2026-11-23.) -->
-  <div class="vpn-entry-wrap">
-    <button class="vpn-entry" id="vpnEntry" type="button" aria-label="Hiddify">
-      <img src="hiddify-icon.jpg" alt="" />
-    </button>
-  </div>
-  <div class="vpn-card" id="vpnCard" hidden>
-    <a class="vpn-dlapp" id="vpnDlApp" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532" target="_blank" rel="noopener">اپ Hiddify را دانلود کنید</a>
-    <input class="vpn-input" id="vpnCode" type="text" dir="ltr"
-           placeholder="SV1-0000-XXXXXX-XXXXXX" autocomplete="off"
-           autocapitalize="characters" spellcheck="false" />
-    <button class="vpn-go" id="vpnGo" type="button">وصل شدن</button>
-    <p class="vpn-msg" id="vpnMsg" role="alert"></p>
-    <div class="vpn-ok" id="vpnOk" hidden>
-      <a class="vpn-open" id="vpnOpen" href="#">در Hiddify باز کنید</a>
-      <a class="vpn-dl" id="vpnDl" href="#">دانلود فایل</a>
-      <div class="vpn-after" id="vpnAfter">بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید</div>
-      <div class="vpn-until" id="vpnUntil"></div>
-    </div>
-  </div>
-
   <div class="home-bottom">
     <button class="globe-btn" id="globeBtn" aria-label="Language / زبان">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#aad2f5" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.5 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.5-3.9-9S9.4 5.5 12 3Z"/></svg>
@@ -760,6 +735,44 @@
 <!-- ============================================================ -->
 <!-- PLAYLISTS — playlists_screen.dart                             -->
 <!-- ============================================================ -->
+<!-- ============================================================ -->
+<!-- HIDDIFY — opened from the Hiddify banner on the Links page.  -->
+<!-- Two banners: 1) download the Hiddify app, 2) the code        -->
+<!-- section — code box on top, the guide video below it. JS      -->
+<!-- below talks to https://sahil-us.duckdns.org and offers the   -->
+<!-- Hiddify open plus a file download on success.                -->
+<!-- ============================================================ -->
+<section class="view pls" id="viewHiddify" hidden aria-label="Hiddify">
+  <div class="pls-inner">
+    <div class="pls-head">
+      <button class="back-btn" id="hfBack" type="button" aria-label="Back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <img src="hiddify-icon.jpg" width="34" height="34" alt="" style="border-radius:9px" />
+      <h2>Hiddify</h2>
+    </div>
+    <a class="banner" id="vpnDlApp" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532" target="_blank" rel="noopener" style="margin-bottom:14px">
+      <span class="wc"><img src="assets/brands/hiddify.png" width="30" height="30" alt="" style="display:block;object-fit:contain" /></span>
+      <span class="bt"><b>Hiddify</b><small id="hfDlSub">اپ Hiddify را دانلود کنید</small></span>
+      <span class="ext"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4 11 13M9 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-3"/></svg></span>
+    </a>
+    <div class="vpn-card" id="vpnCard">
+      <input class="vpn-input" id="vpnCode" type="text" dir="ltr"
+             placeholder="SV1-0000-XXXXXX-XXXXXX" autocomplete="off"
+             autocapitalize="characters" spellcheck="false" />
+      <button class="vpn-go" id="vpnGo" type="button">وصل شدن</button>
+      <p class="vpn-msg" id="vpnMsg" role="alert"></p>
+      <div class="vpn-ok" id="vpnOk" hidden>
+        <a class="vpn-open" id="vpnOpen" href="#">در Hiddify باز کنید</a>
+        <a class="vpn-dl" id="vpnDl" href="#">دانلود فایل</a>
+        <div class="vpn-after" id="vpnAfter">بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید</div>
+        <div class="vpn-until" id="vpnUntil"></div>
+      </div>
+      <div class="vpn-video-lbl" id="vpnVideoLbl">ویدیوی راهنما: چطور وصل شویم</div>
+      <video class="vpn-video" controls preload="none"
+             poster="sahil-vpn-howto-poster.jpg" src="sahil-vpn-howto.mp4"></video>
+    </div>
+  </div>
+</section>
+
 <section class="view pls" id="viewPlaylists" hidden aria-label="Playlists">
   <div class="pls-inner">
     <div class="pls-head">
@@ -1192,7 +1205,7 @@
   setInterval(tickClock, 1000);
 
   /* ================= Views / navigation (the app's page flow) ================= */
-  var VIEWS = ['viewHome','viewLinks','viewPlaylists','viewPlaylistDetail','viewAnnounce','viewAbout'];
+  var VIEWS = ['viewHome','viewLinks','viewPlaylists','viewPlaylistDetail','viewAnnounce','viewAbout','viewHiddify'];
   var currentView = 'viewHome';
   function show(id){
     currentView = id;
@@ -1207,6 +1220,7 @@
   document.getElementById('plDetailBack').addEventListener('click', function(){ show('viewPlaylists'); });
   document.getElementById('aboutBtn').addEventListener('click', function(){ show('viewAbout'); });
   document.getElementById('aboutBack').addEventListener('click', function(){ show('viewLinks'); });
+  document.getElementById('hfBack').addEventListener('click', function(){ show('viewLinks'); });
   document.getElementById('annHome').addEventListener('click', function(){ show('viewHome'); });
 
   /* ================= Banners — links_screen.dart _Banner list,
@@ -1241,6 +1255,7 @@
       a.className = 'banner';
       a.href = LINKS[d.p];
       a.target = '_blank'; a.rel = 'noopener';
+      if (d.p === 'hiddify'){ a.href = '#'; a.removeAttribute('target'); }
       a.style.setProperty('--bd', (i * 0.09) + 's');
       var glyph = '<img src="assets/brands/' + d.glyph + '.png" width="' + d.size + '" height="' + d.size + '" alt="" style="display:block;object-fit:contain" />';
       a.innerHTML =
@@ -1248,7 +1263,8 @@
         '<span class="wc">' + glyph + (d.live ? '<span class="live-badge"><i></i>LIVE</span>' : '') + '</span>' +
         '<span class="bt"><b' + (d.flip ? ' data-flip="' + esc(d.flip) + '"' : '') + '>' + esc(d.title) + '</b><small>' + esc(d.sub) + '</small></span>' +
         '<span class="ext">' + EXT_ICON + '</span>';
-      a.addEventListener('click', function(){
+      a.addEventListener('click', function(e){
+        if (d.p === 'hiddify'){ e.preventDefault(); show('viewHiddify'); }
         if (LINK_V[d.p]) lsSet('seen_' + d.p, LINK_V[d.p]);
         var b = a.querySelector('.pill-new');
         if (b) b.remove();
@@ -1635,7 +1651,7 @@
     });
   });
 
-  /* ================= Sahil VPN connect card (page 1) =================
+  /* ================= Sahil VPN connect card (Links → Hiddify) =================
      The customer enters the code they received; the page asks the
      Sahil VPN web service (real HTTPS on the US server) to check
      it. On success the service hands back a one-tap Hiddify deep
@@ -1651,8 +1667,9 @@
     vpnEl('vpnDl').textContent = s.vpnDownload;
     vpnEl('vpnAfter').textContent = s.vpnAfter;
     var dl = vpnEl('vpnDlApp');
-    dl.textContent = s.vpnDlApp;
     if (LINKS.hiddify) dl.href = LINKS.hiddify;
+    vpnEl('hfDlSub').textContent = s.vpnDlApp;
+    vpnEl('vpnVideoLbl').textContent = s.vpnVideoLbl;
   }
   function vpnShowError(key){
     vpnEl('vpnMsg').textContent = S()[key] || S().vpnErrNet;
@@ -1697,10 +1714,6 @@
       go.disabled = false; go.textContent = S().vpnCheck;
     });
   }
-  vpnEl('vpnEntry').addEventListener('click', function(){
-    var c = vpnEl('vpnCard');
-    c.hidden = !c.hidden;
-  });
   vpnEl('vpnGo').addEventListener('click', vpnCheck);
   vpnEl('vpnCode').addEventListener('keydown', function(e){ if (e.key === 'Enter') vpnCheck(); });
   document.querySelectorAll('.lang-opt').forEach(function(b){
