@@ -650,10 +650,10 @@
   </div>
 
   <!-- Hiddify code entry — page 1 shows ONLY the Hiddify icon,
-       no text. Tapping it opens the section: code box on top,
-       the guide video below. JS below talks to
-       https://sahil-us.duckdns.org and offers the Hiddify open
-       plus a file download on success. -->
+       no text. Tapping it opens the section with the code box.
+       JS below talks to https://sahil-us.duckdns.org and offers
+       the Hiddify open plus a file download on success. (The
+       guide video was removed at the owner's order, 2026-11-23.) -->
   <div class="vpn-entry-wrap">
     <button class="vpn-entry" id="vpnEntry" type="button" aria-label="Hiddify">
       <img src="hiddify-icon.jpg" alt="" />
@@ -671,9 +671,6 @@
       <div class="vpn-after" id="vpnAfter">بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید</div>
       <div class="vpn-until" id="vpnUntil"></div>
     </div>
-    <div class="vpn-video-lbl" id="vpnVideoLbl">ویدیوی راهنما: چطور وصل شویم</div>
-    <video class="vpn-video" controls preload="none"
-           poster="sahil-vpn-howto-poster.jpg" src="sahil-vpn-howto.mp4"></video>
   </div>
 
   <div class="home-bottom">
@@ -1645,7 +1642,6 @@
     vpnEl('vpnOpen').textContent = s.vpnOpenHiddify;
     vpnEl('vpnDl').textContent = s.vpnDownload;
     vpnEl('vpnAfter').textContent = s.vpnAfter;
-    vpnEl('vpnVideoLbl').textContent = s.vpnVideoLbl;
   }
   function vpnShowError(key){
     vpnEl('vpnMsg').textContent = S()[key] || S().vpnErrNet;
