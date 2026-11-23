@@ -79,6 +79,57 @@
     flex:none;background:var(--gold);color:#0a2e4f;font-weight:700;font-size:.95rem;
     border-radius:999px;padding:9px 18px;line-height:1.3;
   }
+  /* Sahil VPN connect card — page 1. The customer enters the code
+     they received; the page asks the Sahil VPN server (over real
+     HTTPS) and, on success, offers the one-tap Hiddify open plus a
+     plain file download. The tutorial video lives next to this
+     file as sahil-vpn-howto.mp4. */
+  .vpn-card{
+    background:#fff;border:1.5px solid #cfdce9;border-radius:18px;
+    padding:16px 16px 14px;margin:0 0 14px;
+    box-shadow:0 4px 18px rgba(6,24,44,.08);
+  }
+  .vpn-card[hidden]{display:none}
+  .vpn-entry-wrap{display:flex;justify-content:center;margin:0 0 14px}
+  .vpn-entry{background:none;border:0;padding:0;cursor:pointer;line-height:0}
+  .vpn-entry img{width:64px;height:64px;border-radius:16px;box-shadow:0 4px 14px rgba(6,24,44,.18)}
+  .vpn-input{
+    width:100%;box-sizing:border-box;margin-top:12px;direction:ltr;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:16.5px;
+    letter-spacing:.4px;text-align:center;color:#101418;
+    padding:13px 10px;border:1.5px solid #b9c9da;border-radius:12px;
+    background:#f6f9fc;outline:none;
+  }
+  .vpn-input:focus{border-color:#1ebfbf;background:#fff}
+  .vpn-go{
+    width:100%;margin-top:10px;background:#101418;color:#fff;border:0;
+    border-radius:12px;padding:13px;font-size:16.5px;font-weight:700;cursor:pointer;
+  }
+  .vpn-go:disabled{opacity:.55}
+  .vpn-msg{margin-top:10px;font-size:14px;color:#b3261e;text-align:center;min-height:0}
+  .vpn-msg:empty{display:none}
+  .vpn-ok{margin-top:12px}
+  .vpn-ok[hidden]{display:none}
+  .vpn-open{
+    display:block;text-align:center;text-decoration:none;background:#1ebfbf;
+    color:#fff;font-weight:800;font-size:17px;border-radius:12px;padding:14px 12px;
+  }
+  .vpn-dl{
+    display:block;text-align:center;margin-top:9px;color:#0a2e4f;
+    font-size:14.5px;font-weight:600;
+  }
+  .vpn-after{margin-top:9px;font-size:13.5px;color:#3d4f61;text-align:center}
+  .vpn-until{margin-top:4px;font-size:12.5px;color:#7a8a99;text-align:center}
+  .vpn-video-lbl{margin-top:16px;font-size:14px;font-weight:700;color:#0a2e4f}
+  .vpn-video{
+    width:100%;max-height:430px;object-fit:contain;background:#000;
+    border-radius:12px;margin-top:8px;
+  }
+  .vpn-android{
+    display:block;margin-top:14px;text-align:center;color:#0a2e4f;
+    font-size:14px;font-weight:600;text-decoration:none;
+    border:1.5px dashed #b9c9da;border-radius:12px;padding:10px;
+  }
   /* In-app guide screen — shown ONLY to visitors inside an
      in-app browser (TikTok, Facebook, Instagram, Telegram,
      Line webviews, marked .inapp by the <head> script — iOS
@@ -625,6 +676,33 @@
     </button>
   </div>
 
+  <!-- Hiddify code entry — page 1 shows ONLY the Hiddify icon,
+       no text. Tapping it opens the section: code box on top,
+       the guide video below. JS below talks to
+       https://sahil-us.duckdns.org and offers the Hiddify open
+       plus a file download on success. -->
+  <div class="vpn-entry-wrap">
+    <button class="vpn-entry" id="vpnEntry" type="button" aria-label="Hiddify">
+      <img src="hiddify-icon.jpg" alt="" />
+    </button>
+  </div>
+  <div class="vpn-card" id="vpnCard" hidden>
+    <input class="vpn-input" id="vpnCode" type="text" dir="ltr"
+           placeholder="SV1-0000-XXXXXX-XXXXXX" autocomplete="off"
+           autocapitalize="characters" spellcheck="false" />
+    <button class="vpn-go" id="vpnGo" type="button">وصل شدن</button>
+    <p class="vpn-msg" id="vpnMsg" role="alert"></p>
+    <div class="vpn-ok" id="vpnOk" hidden>
+      <a class="vpn-open" id="vpnOpen" href="#">در Hiddify باز کنید</a>
+      <a class="vpn-dl" id="vpnDl" href="#">دانلود فایل</a>
+      <div class="vpn-after" id="vpnAfter">بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید</div>
+      <div class="vpn-until" id="vpnUntil"></div>
+    </div>
+    <div class="vpn-video-lbl" id="vpnVideoLbl">ویدیوی راهنما: چطور وصل شویم</div>
+    <video class="vpn-video" controls preload="none"
+           poster="sahil-vpn-howto-poster.jpg" src="sahil-vpn-howto.mp4"></video>
+  </div>
+
   <div class="home-bottom">
     <button class="globe-btn" id="globeBtn" aria-label="Language / زبان">
       <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#aad2f5" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 3.9 5.5 3.9 9s-1.3 6.5-3.9 9c-2.6-2.5-3.9-5.5-3.9-9S9.4 5.5 12 3Z"/></svg>
@@ -799,7 +877,7 @@
     whatsapp:'https://wa.me/93791717830',
     facebook:'https://www.facebook.com/profile.php?id=61594782556691',
     telegram:'https://t.me/sahiltrader2008',
-    sahilVpn:'https://github.com/kunduzai2008/sahil-vpn/releases/download/v2.1.0/Sahil-VPN-v2.1.0.apk',
+    sahilVpn:'https://github.com/kunduzai2008/sahil-vpn/releases/download/v2.1.1/Sahil-VPN-v2.1.1.apk',
     hiddify:'https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532',
     surfshark:'https://kunduzai2008.github.io/kunduz-ai-data/surfshark.html',
     zarchiver:'https://drive.google.com/file/d/1vt8jxX48o_49sRxQYRC5RLySgdPsSMA5/view?usp=drive_link',
@@ -826,6 +904,19 @@
       fbSub:'در فیسبوک مرا دنبال کنید', tgSub:'در تلگرام مرا دنبال کنید',
       surfSub:'اپ Surfshark را دانلود کنید', vpnSub:'اپ Sahil VPN را دانلود کنید', hiddifySub:'اپ Hiddify را دانلود کنید',
       zarchiverSub:'برای بازکردن فایل‌های زیپ',
+      vpnEnter:'کودی را که گرفته‌اید وارد کنید تا وصل شوید',
+      vpnCheck:'وصل شدن', vpnWait:'صبر کنید…',
+      vpnOpenHiddify:'در Hiddify باز کنید', vpnDownload:'دانلود فایل',
+      vpnAfter:'بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید',
+      vpnValidUntil:'اعتبار تا',
+      vpnErrInvalid:'کود اشتباه است. کود را دوباره بررسی کنید',
+      vpnErrNotActivated:'این کود هنوز فعال نشده است. با فروشنده تماس بگیرید',
+      vpnErrExpired:'وقت این کود تمام شده است',
+      vpnErrRevoked:'این کود بسته شده است. با فروشنده تماس بگیرید',
+      vpnErrRate:'بسیار کوشش کردید. یک دقیقه صبر کنید و دوباره کوشش کنید',
+      vpnErrNet:'مشکل در اتصال. دوباره کوشش کنید',
+      vpnVideoLbl:'ویدیوی راهنما: چطور وصل شویم',
+      vpnAndroid:'مشتریان اندرید: اپ Sahil VPN را دانلود کنید',
       latestVideo:'ویدیوی تازه یوتیوب', playlists:'پلی‌لیست‌ها',
       viewPlaylists:'دیدن پلی‌لیست‌های یوتیوب', importantLinks:'لینک‌های مهم',
       videosWord:'ویدیو', opensInYouTube:'در یوتیوب باز می‌شود',
@@ -866,6 +957,19 @@
       fbSub:'په فیسبوک کې ما تعقیب کړئ', tgSub:'په ټیلیګرام کې ما تعقیب کړئ',
       surfSub:'د Surfshark اپ ډاونلوډ کړئ', vpnSub:'د Sahil VPN اپ ډاونلوډ کړئ', hiddifySub:'د Hiddify اپ ډاونلوډ کړئ',
       zarchiverSub:'د زیپ فایلونو پرانستلو لپاره',
+      vpnEnter:'هغه کوډ چې مو اخیستی دلته ولیکئ چې وصل شئ',
+      vpnCheck:'وصل شئ', vpnWait:'لږ صبر…',
+      vpnOpenHiddify:'په Hiddify کې پرانیزئ', vpnDownload:'فایل ډاونلوډ کړئ',
+      vpnAfter:'له پرانستلو وروسته په Hiddify کې د وصل (Connect) تڼۍ ووهئ',
+      vpnValidUntil:'تر دې نیټې اعتبار لري',
+      vpnErrInvalid:'کوډ سم نه دی. کوډ بیا وګورئ',
+      vpnErrNotActivated:'دا کوډ لا فعال شوی نه دی. له پلورونکي سره اړیکه ونیسئ',
+      vpnErrExpired:'د دې کوډ وخت ختم شوی دی',
+      vpnErrRevoked:'دا کوډ بند شوی دی. له پلورونکي سره اړیکه ونیسئ',
+      vpnErrRate:'ډېرې هڅې مو وکړې. یوه دقیقه صبر وکړئ او بیا هڅه وکړئ',
+      vpnErrNet:'په اړیکه کې ستونزه ده. بیا هڅه وکړئ',
+      vpnVideoLbl:'لارښود ویډیو: څنګه وصل شو',
+      vpnAndroid:'د انډرایډ مشتریان: د Sahil VPN اپ ډاونلوډ کړئ',
       latestVideo:'د یوتیوب تازه ویډیو', playlists:'پلی‌لیستونه',
       viewPlaylists:'د یوټیوب پلی‌لیستونه وګورئ', importantLinks:'مهم لینکونه',
       videosWord:'ویډیوګانې', opensInYouTube:'په یوټیوب کې خلاصېږي',
@@ -906,6 +1010,19 @@
       fbSub:'Follow me on Facebook', tgSub:'Follow me on Telegram',
       surfSub:'Download the Surfshark app', vpnSub:'Download the Sahil VPN app', hiddifySub:'Download the Hiddify app',
       zarchiverSub:'Open ZIP files',
+      vpnEnter:'Enter the code you received to connect',
+      vpnCheck:'Connect', vpnWait:'Please wait…',
+      vpnOpenHiddify:'Open in Hiddify', vpnDownload:'Download file',
+      vpnAfter:'After it opens, tap Connect in Hiddify',
+      vpnValidUntil:'Valid until',
+      vpnErrInvalid:'Wrong code. Check the code and try again',
+      vpnErrNotActivated:'This code is not activated yet. Contact your seller',
+      vpnErrExpired:'This code has expired',
+      vpnErrRevoked:'This code has been stopped. Contact your seller',
+      vpnErrRate:'Too many tries. Wait a minute and try again',
+      vpnErrNet:'Connection problem. Try again',
+      vpnVideoLbl:'Watch: how to connect',
+      vpnAndroid:'Android customers: download the Sahil VPN app',
       latestVideo:'Latest YouTube Video', playlists:'Playlists',
       viewPlaylists:'See the YouTube playlists', importantLinks:'Important links',
       videosWord:'videos', opensInYouTube:'Opens in YouTube',
@@ -1539,6 +1656,79 @@
       langOverlay.classList.remove('open');
     });
   });
+
+  /* ================= Sahil VPN connect card (page 1) =================
+     The customer enters the code they received; the page asks the
+     Sahil VPN web service (real HTTPS on the US server) to check
+     it. On success the service hands back a one-tap Hiddify deep
+     link and a short-lived file download. The code is never
+     stored by this page. */
+  var VPN_API = 'https://sahil-us.duckdns.org';
+  var vpnBusy = false;
+  function vpnEl(id){ return document.getElementById(id); }
+  function vpnRender(){
+    var s = S();
+    if (!vpnBusy) vpnEl('vpnGo').textContent = s.vpnCheck;
+    vpnEl('vpnOpen').textContent = s.vpnOpenHiddify;
+    vpnEl('vpnDl').textContent = s.vpnDownload;
+    vpnEl('vpnAfter').textContent = s.vpnAfter;
+    vpnEl('vpnVideoLbl').textContent = s.vpnVideoLbl;
+  }
+  function vpnShowError(key){
+    vpnEl('vpnMsg').textContent = S()[key] || S().vpnErrNet;
+    vpnEl('vpnOk').hidden = true;
+  }
+  function vpnCheck(){
+    if (vpnBusy) return;
+    var code = vpnEl('vpnCode').value.replace(/\s+/g, '').toUpperCase();
+    vpnEl('vpnMsg').textContent = '';
+    vpnEl('vpnOk').hidden = true;
+    if (!code){ vpnShowError('vpnErrInvalid'); return; }
+    vpnBusy = true;
+    var go = vpnEl('vpnGo');
+    go.disabled = true; go.textContent = S().vpnWait;
+    fetch(VPN_API + '/api/config', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code: code })
+    }).then(function(r){
+      return r.json().catch(function(){ return null; }).then(function(j){ return { status: r.status, j: j }; });
+    }).then(function(res){
+      var j = res.j;
+      if (j && j.ok && j.import_url && j.download){
+        vpnEl('vpnOpen').href = j.import_url;
+        vpnEl('vpnDl').href = VPN_API + j.download;
+        var u = vpnEl('vpnUntil');
+        if (j.term_end){
+          var d = String(j.term_end).slice(0, 10);
+          u.textContent = S().vpnValidUntil + ': ' + (lang === 'en' ? d : faDigits(d));
+        } else { u.textContent = ''; }
+        vpnEl('vpnOk').hidden = false;
+      }
+      else if (j && (j.error === 'invalid_code' || j.error === 'missing_code')){ vpnShowError('vpnErrInvalid'); }
+      else if (j && j.error === 'not_activated'){ vpnShowError('vpnErrNotActivated'); }
+      else if (j && j.error === 'expired'){ vpnShowError('vpnErrExpired'); }
+      else if (j && j.error === 'revoked'){ vpnShowError('vpnErrRevoked'); }
+      else if ((j && j.error === 'rate_limited') || res.status === 429){ vpnShowError('vpnErrRate'); }
+      else { vpnShowError('vpnErrNet'); }
+    }).catch(function(){ vpnShowError('vpnErrNet'); })
+    .then(function(){
+      vpnBusy = false;
+      go.disabled = false; go.textContent = S().vpnCheck;
+    });
+  }
+  vpnEl('vpnEntry').addEventListener('click', function(){
+    var c = vpnEl('vpnCard');
+    c.hidden = !c.hidden;
+  });
+  vpnEl('vpnGo').addEventListener('click', vpnCheck);
+  vpnEl('vpnCode').addEventListener('keydown', function(e){ if (e.key === 'Enter') vpnCheck(); });
+  document.querySelectorAll('.lang-opt').forEach(function(b){
+    b.addEventListener('click', function(){ vpnRender(); });
+  });
+  var _applyLiveLinksVpn = applyLiveLinks;
+  applyLiveLinks = function(j){ _applyLiveLinksVpn(j); vpnRender(); };
+  vpnRender();
 
   /* ================= First render ================= */
   renderBanners();
