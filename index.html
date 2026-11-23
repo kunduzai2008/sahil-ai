@@ -90,6 +90,10 @@
     box-shadow:0 4px 18px rgba(6,24,44,.08);
   }
   .vpn-card[hidden]{display:none}
+  .vpn-dlapp{
+    display:block;text-align:center;text-decoration:none;background:#0a2e4f;
+    color:#fff;font-weight:700;font-size:16px;border-radius:12px;padding:13px 12px;
+  }
   .vpn-entry-wrap{display:flex;justify-content:center;margin:0 0 14px}
   .vpn-entry{background:none;border:0;padding:0;cursor:pointer;line-height:0}
   .vpn-entry img{width:64px;height:64px;border-radius:16px;box-shadow:0 4px 14px rgba(6,24,44,.18)}
@@ -660,6 +664,7 @@
     </button>
   </div>
   <div class="vpn-card" id="vpnCard" hidden>
+    <a class="vpn-dlapp" id="vpnDlApp" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532" target="_blank" rel="noopener">اپ Hiddify را دانلود کنید</a>
     <input class="vpn-input" id="vpnCode" type="text" dir="ltr"
            placeholder="SV1-0000-XXXXXX-XXXXXX" autocomplete="off"
            autocapitalize="characters" spellcheck="false" />
@@ -876,6 +881,7 @@
       zarchiverSub:'برای بازکردن فایل‌های زیپ',
       vpnEnter:'کودی را که گرفته‌اید وارد کنید تا وصل شوید',
       vpnCheck:'وصل شدن', vpnWait:'صبر کنید…',
+      vpnDlApp:'اپ Hiddify را دانلود کنید',
       vpnOpenHiddify:'در Hiddify باز کنید', vpnDownload:'دانلود فایل',
       vpnAfter:'بعد از باز شدن، در Hiddify دکمه وصل (Connect) را بزنید',
       vpnValidUntil:'اعتبار تا',
@@ -929,6 +935,7 @@
       zarchiverSub:'د زیپ فایلونو پرانستلو لپاره',
       vpnEnter:'هغه کوډ چې مو اخیستی دلته ولیکئ چې وصل شئ',
       vpnCheck:'وصل شئ', vpnWait:'لږ صبر…',
+      vpnDlApp:'د Hiddify اپ ډاونلوډ کړئ',
       vpnOpenHiddify:'په Hiddify کې پرانیزئ', vpnDownload:'فایل ډاونلوډ کړئ',
       vpnAfter:'له پرانستلو وروسته په Hiddify کې د وصل (Connect) تڼۍ ووهئ',
       vpnValidUntil:'تر دې نیټې اعتبار لري',
@@ -982,6 +989,7 @@
       zarchiverSub:'Open ZIP files',
       vpnEnter:'Enter the code you received to connect',
       vpnCheck:'Connect', vpnWait:'Please wait…',
+      vpnDlApp:'Download the Hiddify app',
       vpnOpenHiddify:'Open in Hiddify', vpnDownload:'Download file',
       vpnAfter:'After it opens, tap Connect in Hiddify',
       vpnValidUntil:'Valid until',
@@ -1642,6 +1650,9 @@
     vpnEl('vpnOpen').textContent = s.vpnOpenHiddify;
     vpnEl('vpnDl').textContent = s.vpnDownload;
     vpnEl('vpnAfter').textContent = s.vpnAfter;
+    var dl = vpnEl('vpnDlApp');
+    dl.textContent = s.vpnDlApp;
+    if (LINKS.hiddify) dl.href = LINKS.hiddify;
   }
   function vpnShowError(key){
     vpnEl('vpnMsg').textContent = S()[key] || S().vpnErrNet;
